@@ -7,7 +7,24 @@ function App() {
   const [charAllowed, setCharAllowefd] = useState(false);
   const [length, setLength] = useState(8);
 
-  const passwordGenerator = useCallback(() => {
+  // const passwordGenerator = useCallback(() => {
+  //   let pass = "";
+  //   let string = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+  //   if (numberAllowed) string += "0123456789";
+  //   if (charAllowed) string += "!@#$%^*&*()[]{}";
+
+  //   for (let i = 0; i < length; i++) {
+  //     let pos = Math.floor(Math.random() * string.length + 1);
+  //     pass += string.charAt(pos);
+  //   }
+  //   setPassword(pass);
+  // }, [numberAllowed, charAllowed, length]);
+
+  const copy = useCallback(() => {
+    window.navigator.clipboard.writeText(password)
+  }, [password])
+
+  useEffect(() => {
     let pass = "";
     let string = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     if (numberAllowed) string += "0123456789";
@@ -18,10 +35,6 @@ function App() {
       pass += string.charAt(pos);
     }
     setPassword(pass);
-  }, [numberAllowed, charAllowed, length]);
-
-  useEffect(() => {
-    passwordGenerator()
   }, [length, numberAllowed, charAllowed])
   return (
     <div className="main">
@@ -35,7 +48,7 @@ function App() {
             className="input_box"
             readOnly
           ></input>
-          <button className="btn">copy</button>
+          <button className="btn" onClick={copy}>copy</button>
         </div>
         <input
           type="range"
